@@ -11,6 +11,11 @@ import Colours from '../Assets/Colours';
 import GLOBAL from '../Utilities/Global';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Family from '../Utilities/Family';
+import {
+  CalendarDaysIcon,
+  MapPinIcon,
+  UserCircleIcon,
+} from 'react-native-heroicons/solid';
 
 const Kundli = ({navigation}) => {
   const [data, setdata] = useState([]);
@@ -44,9 +49,9 @@ const Kundli = ({navigation}) => {
     setdata(result.response);
     SetLoading(false);
   };
-  useEffect(async () => {
+  useEffect(() => {
     SetLoading(true);
-    await AsyncStorage.getItem('UserID').then(value => {
+    AsyncStorage.getItem('UserID').then(value => {
       setUserID(value);
       getAPIdata(value);
     });
@@ -55,7 +60,7 @@ const Kundli = ({navigation}) => {
   const [isLoading, SetLoading] = useState(true);
 
   return (
-    <View style={{alignItems: 'center', flex: 1}}>
+    <View style={{flex: 1}}>
       <ActivityIndicator
         size={'large'}
         color={'red'}
@@ -71,6 +76,7 @@ const Kundli = ({navigation}) => {
       {data != null ? (
         <FlatList
           data={data}
+          style={{marginTop: 8}}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() => CreateKundli(item)}
@@ -79,14 +85,30 @@ const Kundli = ({navigation}) => {
                 style={[styles.profile, {backgroundColor: generateColor()}]}>
                 {item.name.substring(0, 1)}
               </Text>
-              <View style={{width: 320}}>
-                <Text style={styles.name}>{item.name}</Text>
-                <View style={{flexDirection: 'row'}}>
+              <View style={{flex: 1, marginLeft: 10}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <UserCircleIcon color={Colours.PrimaryColor} size={16} />
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 5,
+                    flex: 1,
+                  }}>
+                  <CalendarDaysIcon color={Colours.PrimaryColor} size={16} />
                   <Text style={styles.DOB}>{item.dob},</Text>
                   <Text style={styles.TOB}>{item.tob}</Text>
                 </View>
-                <View style={{flexDirection: 'row'}}>
-                  {/* <Text style={styles.gender}>{item.gender}</Text> */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 5,
+                    flex: 1,
+                  }}>
+                  <MapPinIcon color={Colours.PrimaryColor} size={16} />
                   <Text style={styles.Place}>{item.pob}</Text>
                 </View>
               </View>
@@ -111,15 +133,16 @@ const Kundli = ({navigation}) => {
 
 const styles = StyleSheet.create({
   ListBox: {
-    borderColor: Colours.GrayColor,
-    borderWidth: 1,
+    backgroundColor: Colours.light,
     shadowOffset: 4,
-    marginVertical: 5,
-    width: 370,
-    borderRadius: 5,
+    marginVertical: 6,
+    borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    width: '95%',
+    alignSelf: 'center',
   },
   profile: {
     fontSize: 20,
@@ -140,6 +163,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     alignItems: 'center',
+    alignSelf: 'center',
   },
   createProfileButtonText: {
     color: 'white',
@@ -154,9 +178,8 @@ const styles = StyleSheet.create({
   },
   name: {
     color: 'black',
-    marginLeft: 5,
     fontSize: 15,
-    marginBottom: 4,
+    marginLeft: 5,
     color: Colours.TextDarkColour,
     fontFamily: Family.Regular,
   },
@@ -165,6 +188,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: Colours.TextGrayColour,
     fontFamily: Family.Regular,
+    flex: 1,
   },
   TOB: {
     marginLeft: 10,

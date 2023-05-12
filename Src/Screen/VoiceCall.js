@@ -1,12 +1,39 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, BackHandler, Alert} from 'react-native';
 import {
   ZegoUIKitPrebuiltCall,
   ONE_ON_ONE_VOICE_CALL_CONFIG,
 } from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import {useNavigation} from '@react-navigation/native';
 
 const VoiceCall = ({navigation, route}) => {
   const {RoomId, AstrologerId, name} = route.params;
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Call Ended', 'Are you want to end this call ??', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {
+          text: 'YES',
+          onPress: () => {
+            navigation.navigate('BottomNavigationBar');
+          },
+        },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <>
       <View style={styles.container}>

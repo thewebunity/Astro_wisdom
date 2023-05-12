@@ -33,9 +33,9 @@ const CreateProfile = ({navigation}) => {
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
     SetLoading(true);
-    await AsyncStorage.getItem('UserID').then(value => {
+    AsyncStorage.getItem('UserID').then(value => {
       console.log('async' + value);
       setUserID(value);
       getProfileData(value);
@@ -163,17 +163,22 @@ const CreateProfile = ({navigation}) => {
         }}
       />
       {isLoading ? <View style={{height: '100%', width: '100%'}}></View> : null}
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Text
           style={{
             fontSize: 18,
             marginTop: 20,
             color: Colours.TextDarkColour,
-            fontFamily:Family.Medium
+            fontFamily: Family.Medium,
           }}>
           Complete Profile
         </Text>
-        <Text style={{color: Colours.TextGrayColour, marginBottom: 30,fontFamily:Family.Regular}}>
+        <Text
+          style={{
+            color: Colours.TextGrayColour,
+            marginBottom: 30,
+            fontFamily: Family.Regular,
+          }}>
           to get best prediction in every call with your favourite astrologer ,
           every time
         </Text>
@@ -383,7 +388,7 @@ const styles = StyleSheet.create({
   date: {
     marginRight: 'auto',
     color: Colours.black,
-    fontFamily:Family.Regular,
+    fontFamily: Family.Regular,
   },
   container: {
     flex: 1,
@@ -404,7 +409,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '120%',
     color: Colours.black,
-    fontFamily:Family.Regular,
+    fontFamily: Family.Regular,
   },
   genderSelection: {
     marginBottom: 20,
@@ -415,39 +420,38 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     marginRight: 10,
-    fontFamily:Family.Regular,
+    fontFamily: Family.Regular,
   },
   genderOptionSelected: {
     backgroundColor: 'gray',
   },
   genderOptionText: {
     color: 'black',
-    fontFamily:Family.Regular,
+    fontFamily: Family.Regular,
   },
   genderOptionTextSelected: {
     color: 'white',
-    fontFamily:Family.Regular,
+    fontFamily: Family.Regular,
   },
   createProfileButton: {
     backgroundColor: Colours.PrimaryColor,
     borderRadius: 50,
-    width: "50%",
-    marginVertical:15,
-    paddingVertical:15,
+    width: '50%',
+    marginVertical: 15,
+    paddingVertical: 15,
     alignItems: 'center',
     alignSelf: 'center',
   },
   createProfileButtonText: {
     color: 'white',
-    fontFamily:Family.SemiBold,
+    fontFamily: Family.SemiBold,
   },
   inputTitle: {
-    color:Colours.TextGrayColour,
-    fontFamily:Family.Regular,
+    color: Colours.TextGrayColour,
+    fontFamily: Family.Regular,
     marginRight: 20,
     marginVertical: 5,
     fontSize: 15,
-
   },
 });
 

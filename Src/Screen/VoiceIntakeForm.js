@@ -6,8 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Image,
-  ToastAndroid,
+  Alert,
   FlatList,
 } from 'react-native';
 import React, {useState, useEffect, useContext} from 'react';
@@ -120,6 +119,8 @@ const VoiceIntakeForm = ({navigation, route}) => {
             status: 'calling',
           });
         });
+    } else {
+      Alert.alert(data.response.message);
     }
   };
 

@@ -16,10 +16,9 @@ import Family from '../Utilities/Family';
 const GLOBAL = require('../Utilities/Global');
 
 const FreeKundli = ({navigation}) => {
-  useEffect(async () => {
+  useEffect(() => {
     // call your function here
-
-    await AsyncStorage.getItem('UserID').then(value => {
+    AsyncStorage.getItem('UserID').then(value => {
       console.log(value);
       setUserID(value);
       // Do something with the retrieved value
@@ -74,7 +73,6 @@ const FreeKundli = ({navigation}) => {
     )
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson);
         navigation.navigate('Home');
       });
   };
@@ -213,11 +211,11 @@ const FreeKundli = ({navigation}) => {
             height: 30,
             borderRadius: 15,
             backgroundColor:
-              selectedStep > 0 ? Colours.PrimaryColor : '#f2f2f2',
+              selectedStep > 0 ? Colours.PrimaryColor : '#fafafa',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff'}}>1</Text>
+          <Text style={{color: selectedStep > 0 ? '#fff' : 'gray'}}>1</Text>
         </View>
         <View
           style={{
@@ -232,11 +230,11 @@ const FreeKundli = ({navigation}) => {
             borderRadius: 15,
 
             backgroundColor:
-              selectedStep > 1 ? Colours.PrimaryColor : '#f2f2f2',
+              selectedStep > 1 ? Colours.PrimaryColor : '#fafafa',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff'}}>2</Text>
+          <Text style={{color: selectedStep > 1 ? '#fff' : 'gray'}}>2</Text>
         </View>
         <View
           style={{
@@ -250,11 +248,11 @@ const FreeKundli = ({navigation}) => {
             height: 30,
             borderRadius: 15,
             backgroundColor:
-              selectedStep > 2 ? Colours.PrimaryColor : '#f2f2f2',
+              selectedStep > 2 ? Colours.PrimaryColor : '#fafafa',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff'}}>3</Text>
+          <Text style={{color: selectedStep > 2 ? '#fff' : 'gray'}}>3</Text>
         </View>
         <View
           style={{
@@ -268,11 +266,11 @@ const FreeKundli = ({navigation}) => {
             height: 30,
             borderRadius: 15,
             backgroundColor:
-              selectedStep > 3 ? Colours.PrimaryColor : '#f2f2f2',
+              selectedStep > 3 ? Colours.PrimaryColor : '#fafafa',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff'}}>4</Text>
+          <Text style={{color: selectedStep > 3 ? '#fff' : 'gray'}}>4</Text>
         </View>
         <View
           style={{
@@ -286,11 +284,11 @@ const FreeKundli = ({navigation}) => {
             height: 30,
             borderRadius: 15,
             backgroundColor:
-              selectedStep > 4 ? Colours.PrimaryColor : '#f2f2f2',
+              selectedStep > 4 ? Colours.PrimaryColor : '#fafafa',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff'}}>5</Text>
+          <Text style={{color: selectedStep > 4 ? '#fff' : 'gray'}}>5</Text>
         </View>
       </View>
       <View
@@ -433,9 +431,6 @@ const FreeKundli = ({navigation}) => {
                 {TOB.getHours() + ':' + TOB.getMinutes()}
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.Button} onPress={() => setOpens(true)}>
-            <Text>Change Time</Text>
-          </TouchableOpacity> */}
             <DatePicker
               modal
               open={opens}
@@ -530,7 +525,7 @@ const FreeKundli = ({navigation}) => {
               height: 50,
               width: 110,
               marginHorizontal: 44,
-              backgroundColor: 'orange',
+              backgroundColor: Colours.PrimaryColor,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 10,
@@ -557,15 +552,10 @@ const FreeKundli = ({navigation}) => {
                 setSelectedStep(selectedStep - 1);
                 prev4();
               }
-              // if (selectedStep == 0) {
-              //   setSelectedStep(selectedStep + 1);
-              // } else {
-              //   setTimeout(() => {
-              //     setSelectedStep(selectedStep + 1);
-              //   }, 3000);
-              // }
             }}>
-            <Text>Previous</Text>
+            <Text style={{fontFamily: Family.Regular, color: Colours.light}}>
+              Previous
+            </Text>
           </TouchableOpacity>
         ) : (
           <View
@@ -586,7 +576,7 @@ const FreeKundli = ({navigation}) => {
             height: 50,
             width: 110,
             marginHorizontal: 44,
-            backgroundColor: 'orange',
+            backgroundColor: Colours.PrimaryColor,
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 10,
@@ -622,7 +612,9 @@ const FreeKundli = ({navigation}) => {
               }, 1000);
             }
           }}>
-          <Text>Next</Text>
+          <Text style={{fontFamily: Family.Regular, color: Colours.light}}>
+            Next
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -636,6 +628,7 @@ const styles = StyleSheet.create({
     marginLeft: 36,
     marginBottom: 12,
     color: Colours.TextDarkColour,
+    fontFamily: Family.Medium,
   },
 
   place: {
@@ -666,14 +659,17 @@ const styles = StyleSheet.create({
   },
   genderOptionText: {
     color: 'black',
+    fontFamily: Family.Medium,
   },
   genderOptionTextSelected: {
     color: 'white',
+    fontFamily: Family.Medium,
   },
   date: {
     marginHorizontal: 40,
     fontSize: 18,
     color: Colours.TextDarkColour,
+    fontFamily: Family.Medium,
   },
   nameInput: {
     marginLeft: 35,
@@ -682,6 +678,7 @@ const styles = StyleSheet.create({
     paddingBottom: -19,
     width: 320,
     color: Colours.TextDarkColour,
+    fontFamily: Family.Medium,
   },
   Button: {
     borderRadius: 12,

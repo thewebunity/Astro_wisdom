@@ -13,7 +13,7 @@ import Global from '../Utilities/Global';
 import Family from '../Utilities/Family';
 
 const AddMoney = ({navigation, route}) => {
-  const {User, Balance} = useContext(UserAuthContext);
+  const {User, Balance, getAstrolgerdata} = useContext(UserAuthContext);
 
   const [Amount, setAmount] = useState();
 
@@ -27,6 +27,7 @@ const AddMoney = ({navigation, route}) => {
 
   useEffect(() => {
     setAmount(route.params.Amount);
+    getAstrolgerdata();
   }, []);
 
   const AmountSet = amount => {

@@ -220,7 +220,7 @@ export default function Home({navigation}) {
         }}
       />
       {isLoading ? <View style={{height: '100%', width: '100%'}}></View> : null}
-      <Header navigation={navigation} name={'Astro Wisdom'} />
+      <Header navigation={navigation} name={'AstroWisdom'} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.imageContainer}>

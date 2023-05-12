@@ -37,6 +37,7 @@ const Profile = ({navigation, route}) => {
     )
       .then(response => response.json())
       .then(responseJson => {
+        console.log(responseJson);
         setData(responseJson.response);
         setUserReviewData(responseJson.response.review);
         SetLoading(false);
@@ -84,49 +85,58 @@ const Profile = ({navigation, route}) => {
   const UserReview = ({item}) => {
     return (
       <View style={styles.Container}>
-        <View style={{flexDirection: 'row'}}>
-          <Image source={item.photo} style={styles.ReviewPicture} />
-          <Text style={styles.ReviewName}>{item.user}</Text>
+        <View style={{position: 'absolute', right: 10, top: 5}}>
+          <Text
+            style={{
+              fontFamily: Family.Regular,
+              fontSize: 10,
+              color: Colours.TextGrayColour,
+            }}>
+            {item.reviewDate}
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', margin: 10}}>
-          <Icon
-            name="star"
-            size={14}
-            color={1 <= item.star ? '#FFB300' : 'gray'}
-          />
-          <Icon
-            name="star"
-            size={14}
-            color={2 <= item.star ? '#FFB300' : 'gray'}
-          />
-          <Icon
-            name="star"
-            size={14}
-            color={3 <= item.star ? '#FFB300' : 'gray'}
-          />
-          <Icon
-            name="star"
-            size={14}
-            color={4 <= item.star ? '#FFB300' : 'gray'}
-          />
-          <Icon
-            name="star"
-            size={14}
-            color={5 <= item.star ? '#FFB300' : 'gray'}
-          />
+
+        <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+          <Image source={{uri: item.photo}} style={styles.ReviewPicture} />
+          <View
+            style={{
+              flexDirection: 'column',
+              marginLeft: 10,
+              alignItems: 'center',
+            }}>
+            <Text style={styles.ReviewName}>{item.user}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name="star"
+                size={16}
+                color={1 <= item.star ? '#FFB300' : 'gray'}
+              />
+              <Icon
+                name="star"
+                size={16}
+                color={2 <= item.star ? '#FFB300' : 'gray'}
+              />
+              <Icon
+                name="star"
+                size={16}
+                color={3 <= item.star ? '#FFB300' : 'gray'}
+              />
+              <Icon
+                name="star"
+                size={16}
+                color={4 <= item.star ? '#FFB300' : 'gray'}
+              />
+              <Icon
+                name="star"
+                size={16}
+                color={5 <= item.star ? '#FFB300' : 'gray'}
+              />
+            </View>
+            {item.review == '' ? null : (
+              <Text style={styles.ReviewText}>{item.review}</Text>
+            )}
+          </View>
         </View>
-        <Text
-          style={{
-            fontFamily: Family.Regular,
-            fontSize: 10,
-            color: Colours.TextGrayColour,
-            alignSelf: 'flex-end',
-          }}>
-          {item.reviewDate}
-        </Text>
-        {item.review == '' ? null : (
-          <Text style={styles.ReviewText}>{item.review}</Text>
-        )}
       </View>
     );
   };
@@ -177,9 +187,6 @@ const Profile = ({navigation, route}) => {
               <View style={{flexDirection: 'row', margin: 10, width: '78%'}}>
                 <Text style={styles.nameText}>{Data.profileName}</Text>
                 <Verified name="verified" size={20} color="green" />
-                <TouchableOpacity style={{marginLeft: 'auto'}}>
-                  <Dots name="dots-vertical" size={20} color="white" />
-                </TouchableOpacity>
               </View>
               <View style={{marginLeft: 8, marginTop: -10}}>
                 <Text
@@ -265,7 +272,16 @@ const Profile = ({navigation, route}) => {
 
         <View style={styles.Container}>
           <Text style={styles.CategoryHeading}>Description</Text>
-          <Text>{Data.description}</Text>
+          <Text
+            style={{
+              fontFamily: Family.Medium,
+              fontSize: 14,
+              color: Colours.TextGrayColour,
+              flex: 1,
+              paddingHorizontal: 5,
+            }}>
+            {Data.description}
+          </Text>
         </View>
         <View style={styles.Container}>
           <Text style={styles.CategoryHeading}>Rating and Review</Text>
@@ -323,21 +339,7 @@ const Profile = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
-            <View>
-              <View style={styles.barContainer}>
-                {[5, 4, 3, 2, 1].map(item => (
-                  <View style={styles.barRow} key={item}>
-                    <Text style={styles.barText}>{item} star</Text>
-                    <View style={styles.progressBar}>
-                      <View style={styles.progress} />
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </View>
           </View>
-        </View>
-        <View style={styles.Container}>
           <Text style={styles.CategoryHeading}>User Review</Text>
           <FlatList renderItem={UserReview} data={UserReviewData} />
         </View>
@@ -507,7 +509,7 @@ const Profile = ({navigation, route}) => {
 
             <Text
               style={{
-                fontSize: 14,
+                fontSize: 16,
                 fontFamily: Family.Medium,
                 color: Colours.gray,
               }}>
@@ -583,6 +585,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 8,
     paddingHorizontal: 8,
+    paddingVertical: 10,
     backgroundColor: 'white',
   },
   profilePicture: {
@@ -636,20 +639,21 @@ const styles = StyleSheet.create({
   },
   ReviewPicture: {
     width: 35,
-    height: 35,
+    height: 45,
     borderRadius: 100,
+    resizeMode: 'contain',
   },
   ReviewName: {
     fontSize: 15,
     color: 'black',
-    margin: 5,
-    marginLeft: 10,
     fontFamily: Family.Medium,
   },
   ReviewText: {
-    marginLeft: 10,
     fontFamily: Family.Medium,
     color: Colours.TextGrayColour,
+    flex: 1,
+    marginTop: 5,
+    fontSize: 12,
   },
   Star: {
     backgroundColor: '#f542bc',

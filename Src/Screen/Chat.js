@@ -19,6 +19,7 @@ import Colours from '../Assets/Colours';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import Family from '../Utilities/Family';
 import Global from '../Utilities/Global';
+import {ClockIcon} from 'react-native-heroicons/outline';
 
 const Chat = ({navigation, route}) => {
   const {RoomId, AstrologerId, userId} = route.params;
@@ -203,28 +204,37 @@ const Chat = ({navigation, route}) => {
           padding: 10,
         }}>
         <Text style={{color: 'red', textAlign: 'justify', fontSize: 13}}>
-          This is an automated messages. Chat has been ended due to Customer
-          doesn't have enough balance.
+          This is an automated messages. Chat has been ended .
         </Text>
       </View>
     ) : (
-      <InputToolbar {...inputToolbarProps} containerStyle={containerStyle} />
+      <InputToolbar
+        {...inputToolbarProps}
+        containerStyle={containerStyle}
+        textInputProps={{
+          style: styles.textInput,
+        }}
+      />
     );
   };
 
   return (
     <>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <TouchableOpacity
           onPress={() => StopChat()}
           style={{
-            backgroundColor: Colours.PrimaryColor,
             margin: 10,
-            padding: 6,
+            backgroundColor: Colours.PrimaryColor,
+            paddingHorizontal: 12,
+            paddingVertical: 5,
             borderRadius: 5,
             justifyContent: 'center',
           }}>
-          <Text style={{color: 'white'}}>End Chat</Text>
+          <Text
+            style={{color: '#FFF', fontFamily: Family.Regular, fontSize: 16}}>
+            End Chat
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -232,10 +242,24 @@ const Chat = ({navigation, route}) => {
             marginRight: 10,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingTop: 10,
           }}>
-          <Text style={{color: Colours.black, marginRight: 8, marginTop: -1}}>
-            Chat End in : {timeLeft}
+          <ClockIcon
+            color={Colours.PrimaryColor}
+            size={20}
+            style={{marginHorizontal: 5}}
+          />
+          <Text
+            style={{
+              color: Colours.black,
+              marginRight: 8,
+              marginTop: -1,
+              fontFamily: Family.Regular,
+              fontSize: 18,
+            }}>
+            0{Math.floor(timeLeft / 60)} :{' '}
+            {Math.floor(timeLeft % 60) > 9
+              ? Math.floor(timeLeft % 60)
+              : '0' + Math.floor(timeLeft % 60)}
           </Text>
           <Modal
             animationType="slide"
@@ -270,7 +294,7 @@ const Chat = ({navigation, route}) => {
                 </Text>
                 <Image
                   source={{
-                    uri: Data.name,
+                    uri: Data.photo,
                   }}
                   style={{width: 70, height: 70, borderRadius: 35}}
                 />
@@ -428,5 +452,11 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+  },
+  textInput: {
+    color: 'gray',
+    flex: 1,
+    fontFamily: Family.Medium,
+    paddingHorizontal: 10,
   },
 });
