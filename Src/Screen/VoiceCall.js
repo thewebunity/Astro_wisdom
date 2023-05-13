@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet, BackHandler, Alert} from 'react-native';
 import {
   ZegoUIKitPrebuiltCall,
@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const VoiceCall = ({navigation, route}) => {
   const {RoomId, AstrologerId, name} = route.params;
-
+  const prebuiltRef = useRef();
   useEffect(() => {
     const backAction = () => {
       Alert.alert('Call Ended', 'Are you want to end this call ??', [
@@ -20,7 +20,7 @@ const VoiceCall = ({navigation, route}) => {
         {
           text: 'YES',
           onPress: () => {
-            navigation.navigate('BottomNavigationBar');
+            prebuiltRef.current.hangUp();
           },
         },
       ]);
@@ -38,6 +38,7 @@ const VoiceCall = ({navigation, route}) => {
     <>
       <View style={styles.container}>
         <ZegoUIKitPrebuiltCall
+          ref={prebuiltRef}
           appID={158492876}
           appSign={
             '71371c39c64e83dcd661099713c5db6fda00a41366158f0253f6abbca5b044cf'
@@ -52,6 +53,15 @@ const VoiceCall = ({navigation, route}) => {
             },
             onHangUp: () => {
               navigation.navigate('BottomNavigationBar');
+            },
+
+            durationConfig: {
+              isVisible: true,
+              onDurationUpdate: duration => {
+                if (duration === 5 * 60) {
+                  prebuiltRef.current.hangUp();
+                }
+              },
             },
           }}
         />

@@ -1,6 +1,6 @@
 {
   "name": "Astro_Wisdom",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -20,7 +20,7 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
-    "@zegocloud/zego-uikit-prebuilt-call-rn": "^3.0.2",
+    "@zegocloud/zego-uikit-prebuilt-call-rn": "^4.0.1",
     "@zegocloud/zego-uikit-rn": "^1.12.6",
     "react": "18.2.0",
     "react-delegate-component": "^1.0.0",
