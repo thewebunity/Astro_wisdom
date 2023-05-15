@@ -107,14 +107,13 @@ const CreateProfile = ({navigation}) => {
 
   const handleCityChange = text => {
     setPOB(text);
-    if (text) {
+    if (text.length > 4) {
       fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${text}&key=AIzaSyB7Y0M-RQdTga_32iAxYutKvfNm6DncfNM `,
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${text}}.json?access_token=pk.eyJ1IjoiYXN0cm93aXNkb20iLCJhIjoiY2xoYmhheHdoMHJuZDNkbnM2ZGo1a3N1aSJ9.fRwqQFdkcdTxkBXXayi-BQ`,
       )
         .then(response => response.json())
         .then(data => {
-          setPlaces(data.results);
-          console.log(data);
+          setPlaces(data.features);
         });
     } else {
       setPlaces([]);
@@ -122,9 +121,9 @@ const CreateProfile = ({navigation}) => {
   };
 
   const handlePlaceSelect = place => {
-    setLongitude(place.geometry.location.lng);
-    setLatitude(place.geometry.location.lat);
-    setPOB(place.formatted_address);
+    setLongitude(place.center[0]);
+    setLatitude(place.center[1]);
+    setPOB(place.place_name);
     setPlaces([]);
   };
 
@@ -345,7 +344,6 @@ const CreateProfile = ({navigation}) => {
           <Text style={styles.createProfileButtonText}>Create Profile</Text>
         </TouchableOpacity>
       </ScrollView>
-
       <Modal visible={openPOBModal}>
         <View style={{margin: 10}}>
           <View style={{flexDirection: 'row'}}>
@@ -355,15 +353,21 @@ const CreateProfile = ({navigation}) => {
             <TouchableOpacity
               style={{position: 'absolute', right: 10}}
               onPress={() => setopenPOBModal(false)}>
-              <Text>Close</Text>
+              <Text
+                style={{
+                  fontFamily: Family.Medium,
+                  color: Colours.TextGrayColour,
+                }}>
+                Close
+              </Text>
             </TouchableOpacity>
           </View>
           <TextInput
             style={[styles.nameInput, {marginLeft: 5}]}
             value={POB}
-            placeholder="Place of birth"
+            placeholder="Enter Place of birth"
+            placeholderTextColor={Colours.TextGrayColour}
             onChangeText={handleCityChange}
-            placeholderTextColor={'gray'}
           />
           <FlatList
             data={places}
@@ -373,7 +377,15 @@ const CreateProfile = ({navigation}) => {
                   setopenPOBModal(false);
                   handlePlaceSelect(item);
                 }}>
-                <Text style={styles.place}>{item.formatted_address}</Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: Family.Medium,
+                    color: Colours.TextGrayColour,
+                    marginVertical: 10,
+                  }}>
+                  {item.place_name}
+                </Text>
               </TouchableOpacity>
             )}
           />
